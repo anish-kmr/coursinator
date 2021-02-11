@@ -1,0 +1,26 @@
+.search{
+    position: relative;
+}
+.search_icon{
+    position: absolute;
+    left:0;
+    top:50%;
+    transform: translateY(-50%);
+    width: 2.5rem !important ;
+    height: 2.5rem !important ;
+    color:var(--text-tertiary)
+}
+.search_field{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    left:3rem;
+    padding:1rem;
+    width:100%;
+    border:none;
+    font-size: 1.6rem;
+}
+.search_field:focus{
+    outline: none;
+    border:none;
+}
