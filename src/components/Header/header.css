@@ -1,6 +1,6 @@
 .header{
     background-color: var(--primary-background);
-    height:8rem;
+    height:6rem;
     padding:0rem 4rem;
     border-bottom:1px solid #e7edf2;
     display: flex;

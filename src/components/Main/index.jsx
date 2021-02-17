@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Courses from 'components/Courses';
+import CreateCourse from 'components/CreateCourse';
 import Dashboard from 'components/Dashboard';
 
 import './main.css'
@@ -15,6 +16,7 @@ const Main = () => {
         <Switch>
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/courses' component={Courses} />
+          <Route exact path='/courses/create' component={CreateCourse} />
         </Switch>
       </div>
     </div>

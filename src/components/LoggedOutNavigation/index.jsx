@@ -1,22 +1,37 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'; 
 
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper';
 import Login from 'components/Login'
 import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import SubjectIcon from '@material-ui/icons/Subject';
 import './loggedout_navigation.css';
 import TimerIcon from '@material-ui/icons/Timer';
 
+
+
+
+const useStyles = makeStyles(theme=>{
+    return {
+        root:{
+            backgroundColor: theme.palette.primary.main
+        }
+    }
+})
+
+
 const LoggedOutNavigation = () => {
+    const classes = useStyles();
     return (
         <div className="nav_container" >
-            <div className="l_block">
+            <Paper className={classes.root}  color="primary" >
                 <div className="logo_container">
                     <img src="https://mythemestore.com/beehive-preview/wp-content/themes/beehive/assets/images/logo-vertical.svg"/>
                 </div>
                 
                 <Login/>
-            </div>
+            </Paper>
             
             <div className="nav_list">
 

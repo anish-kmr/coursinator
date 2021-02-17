@@ -22,7 +22,7 @@ const LoggedInNavigation = () => {
                 <div className="l_nav_text">Dashboard</div>
             </NavLink>
 
-            <NavLink exact to="/courses" activeClassName="l_nav_item_selected" className="l_nav_item" >
+            <NavLink to="/courses" activeClassName="l_nav_item_selected" className="l_nav_item" >
               <LocalLibraryIcon className="l_icon" />
               <div className="l_nav_text">Courses</div>
             </NavLink>

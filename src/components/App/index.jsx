@@ -1,6 +1,5 @@
 import React,{ useState } from 'react';
 
-
 import AppContext from 'contexts/AppContext';
 import LoggedOutNavigation from 'components/LoggedOutNavigation'
 import LoggedInNavigation from 'components/LoggedInNavigation'

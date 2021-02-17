@@ -1,0 +1,50 @@
+.course_detail_form_container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.course_detail_form_container>div{
+    flex-basis: 100%;
+    flex: 1;
+    min-width:30rem ;
+    padding:2rem;
+    box-sizing: border-box;
+}
+.input_group{
+    display: flex;
+    align-items: center;
+}
+.input_group>*{
+    margin-right: 1rem;
+    width: 10rem;
+}
+.thumbnail_container{
+    width:30rem;
+    height: 20rem;
+    position: relative;
+    background-color: #efefef ;
+    border-radius: 5px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+.add_thumbnail_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    
+}
+.upload_text{
+    color:#707070;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+}
+.thumbnail_preview{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0
+}

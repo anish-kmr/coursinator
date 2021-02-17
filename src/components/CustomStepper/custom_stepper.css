@@ -1,0 +1,22 @@
+.stepper_container{
+    position: relative;
+    min-height: 95%;
+    display: grid;
+    grid-template-rows: max-content auto 6rem;
+    
+}
+
+.stepper_controls_container{
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    /* align-items: center; */
+    /* padding-bottom: 1rem; */
+    
+}
+
+.stepper_controls_container>*{
+    padding:1rem;
+    display: flex;
+    justify-content: center;
+}

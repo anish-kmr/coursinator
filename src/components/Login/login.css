@@ -5,7 +5,7 @@
     height: max-content;
     margin:1rem 2rem;
     margin-bottom: 8rem;
-    padding:2rem 2.5rem;
+    padding:1rem;
     box-shadow: 0 2px 15px #452d6d;
     transform: translateY(6rem);
 }
@@ -14,12 +14,7 @@
     color:var(--text-secondary);
     text-align: center;
     font-size: 2rem;
-    margin-bottom: 2rem;
 
-}
-.form{
-    text-align: center;
-    margin-bottom: 1rem;
 }
 .form_input{
     margin:.6rem auto;
@@ -45,10 +40,10 @@
     padding:1rem 2rem;
     padding-left: 4rem;
 }
-input:focus{
+.form_input input:focus{
     border:1px solid var(--primary-dark);
 }
-.btn{margin:1rem 0 !important;}
+/* .btn{margin:1rem 0 !important;} */
 
 .MuiButton-root{
     width: 100%;
@@ -58,3 +53,12 @@ input:focus{
     text-transform: none !important;
     font-size: 1.4rem;
 }
+
+.signup_link{
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: underline;
+    margin-top: 1.5rem;
+    color:var(--primary-dark)
+}
+.signup_link:hover{cursor: pointer;}
