@@ -1,0 +1,4 @@
+{
+    "login":"http://localhost:8000/user/login",
+    "signin":"http://localhost:8000/user/signup"
+}

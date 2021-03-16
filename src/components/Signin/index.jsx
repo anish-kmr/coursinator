@@ -1,4 +1,6 @@
-import React,{useState} from 'react'
+import React,{ useState, useContext} from 'react'
+import {useHistory} from 'react-router-dom';
+
 import {
     Button,
     Dialog,
@@ -12,7 +14,8 @@ import {
     FormControl,
     OutlinedInput,
     InputAdornment,
-    IconButton
+    IconButton,
+    TextField
 } from '@material-ui/core';
 
 
@@ -20,23 +23,31 @@ import {
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { makeStyles,useTheme } from '@material-ui/core/styles';
+import { store } from 'react-notifications-component';
+import AppContext from 'contexts/AppContext';
+
+
+import endpoints from 'endpoints.json'
+import axios from 'axios';
+
 import './signin.css'
 
 const useStyle = makeStyles({
-    dialogContent:{
-        padding:"3rem",
-    },
-    formControl: {
-        marginBottom: '1.4rem'
-    },
+    dialogContent:{padding:"3rem"},
+    formControl: {marginBottom: '1.2rem'},
+    formHelper:{fontSize:"1.2rem"},
+    formSelect:{fontSize:'1.6rem'},
     formInput:{
-        fontSize:'1.4rem',
-    }
+        padding:"2rem",
+        fontSize:'1.6rem',
+    },
 })
 
 const Signin = ({open,setOpen}) => {
     const theme = useTheme();
+    const history = useHistory();
     const classes = useStyle();
+    const { loggedIn, setLoggedIn, notificationOptions } = useContext(AppContext);
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [form,setFormValues]=useState({
         fullname:'',
@@ -45,12 +56,75 @@ const Signin = ({open,setOpen}) => {
         password:'',
         showPassword:false,
     })
+
+    const  validateEmail = mail => !( mail==="" || /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
+    const  validatePassword = pwd => ( pwd.length>0 && pwd.length<6)
+
+    const validateForm = ()=>{
+        let title='', message=''
+        if(form.fullname.length==0 || form.email.length==0 || form.password.length==0){
+            title = "All Fields are Mandatory"
+            message = "Please Fill all the fields to Sign Up"
+        }
+        else if(form.fullname.length<3) {
+            title = "Name not valid"
+            message = "Name Must be at least 3 characters"
+        }
+        else if(validateEmail(form.email)) {
+            title = "Email not valid"
+            message = "Specified Email Format is incorrect"
+        }
+        else if(validatePassword(form.password)){
+            title = "Password not valid"
+            message = "Password Must be at least 6 characters"
+        }
+        else return true
+        store.addNotification({...notificationOptions,title,message,type:"danger"})
+        return false
+    }
     const handleFormChange = (prop) => (event) => {
         setFormValues({ ...form, [prop]: event.target.value });
     };
     const handleClose = () =>setOpen(false);
     const createAccount = ()=>{
+        if(!validateForm()) return false
+
         console.log('form ',form)
+        let payload = {
+            name:form.fullname,
+            email:form.email,
+            password:form.password,
+            role:form.role
+        }
+        return axios.post(endpoints.signin,payload)
+            .then(res=>{
+                console.log(res)
+                if(res.data.created){
+                    let user = res.data.user
+                    localStorage.setItem("user",JSON.stringify(user))
+                    setLoggedIn(!loggedIn);
+                    history.push('/dashboard')
+                    
+                }
+                else {
+                    store.addNotification({
+                        ...notificationOptions,
+                        title:"Sign Up Failed!!! ",
+                        message:res.data.error,
+                        type:'danger'
+                    })
+                }
+            })
+            .catch(err=>{
+                console.log('err signing in',err)
+                store.addNotification({
+                    ...notificationOptions,
+                    title:"Oops! Something went wrong. ",
+                    message:"Unexpected Error! Please Try Again Later",
+                    type:'danger'
+                })
+            })
+        
     }
     return (
         <>
@@ -62,10 +136,10 @@ const Signin = ({open,setOpen}) => {
             aria-labelledby="responsive-dialog-title"
             
             >
-                <DialogTitle id="responsive-dialog-title" >
-                    <h2  className="signin_heading">
+                <DialogTitle id="responsive-dialog-title"  >
+                    <p  className="signin_heading">
                         Sign Up
-                    </h2>
+                    </p>
                 </DialogTitle>
                 <DialogContent >
                 <DialogContentText>
@@ -74,9 +148,14 @@ const Signin = ({open,setOpen}) => {
                 <form className={classes.dialogContent}>
                     <FormControl className={classes.formControl}  fullWidth variant="outlined">
                         <label htmlFor="fullname" className="input_label" >Full Name</label>
-                        <OutlinedInput
+                        <TextField
+                            variant="outlined"
                             id="fullname"
-                            className={classes.formInput}
+                            InputProps={{
+                                classes: {
+                                  input: classes.formInput,
+                                },
+                            }}
                             value={form.fullname}
                             onChange={handleFormChange('fullname')}
                             />
@@ -86,7 +165,7 @@ const Signin = ({open,setOpen}) => {
                         <label htmlFor="role" className="input_label" >Select a Role</label>
                         <Select
                             id="role"
-                            className={classes.formInput}
+                            className={classes.formSelect}
                             value={form.role}
                             onChange={handleFormChange('role')}
                             >
@@ -97,9 +176,19 @@ const Signin = ({open,setOpen}) => {
 
                     <FormControl className={classes.formControl} fullWidth variant="outlined">
                         <label htmlFor="email" className="input_label" >Email</label>
-                        <OutlinedInput
+                        <TextField
+                            variant="outlined"
                             id="email"
-                            className={classes.formInput}
+                            InputProps={{
+                                classes: {
+                                  input: classes.formInput,
+                                },
+                            }}
+                            FormHelperTextProps	={{
+                                classes:{error:classes.formHelper}
+                            }}
+                            helperText={validateEmail(form.email)?"Email Address not valid":""}
+                            error={validateEmail(form.email)}
                             value={form.email}
                             onChange={handleFormChange('email')}
                         />
@@ -107,25 +196,35 @@ const Signin = ({open,setOpen}) => {
 
                     <FormControl className={classes.formControl} fullWidth variant="outlined">
                         <label htmlFor="password" className="input_label" >Password</label>
-                        <OutlinedInput
+                        <TextField
+                            variant="outlined"
                             id="password"
-                            className={classes.formInput}
+                            InputProps={{
+                                classes: {
+                                  input: classes.formInput,
+                                },
+                                endAdornment:
+                                    <InputAdornment position="end">
+                                      <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={()=>setFormValues({ ...form, showPassword: !form.showPassword })}
+                                        onMouseDown={ev=>ev.preventDefault()}
+                                        edge="end"
+                                      >
+                                        {form.showPassword ? <Visibility /> : <VisibilityOff />}
+                                      </IconButton>
+                                    </InputAdornment>
+                                
+                            }}
+                            FormHelperTextProps	={{
+                                classes:{error:classes.formHelper}
+                            }}
+                            helperText={validatePassword(form.password)?"Password must be at least 6 characters":""}
+                            error={validatePassword(form.password)}
                             value={form.password}
                             type={form.showPassword ? 'text' : 'password'}
                             onChange={handleFormChange('password')}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    className={classes.icon}
-                                    aria-label="toggle password visibility"
-                                    onClick={()=>setFormValues({ ...form, showPassword: !form.showPassword })}
-                                    onMouseDown={ev=>ev.preventDefault()}
-                                    edge="end"
-                                  >
-                                    {form.showPassword ? <Visibility /> : <VisibilityOff />}
-                                  </IconButton>
-                                </InputAdornment>
-                            }
+                            
                         />
                     </FormControl>
                 </form>

@@ -42,10 +42,9 @@ const CourseDetailsForm = ({props}) => {
     if (e.target.files.length) {
       setState({
         ...state,
-        image:{
-          preview: URL.createObjectURL(e.target.files[0]),
-          raw: e.target.files[0]
-        }
+        imagePreview: URL.createObjectURL(e.target.files[0]),
+        imageRaw: e.target.files[0]
+        
       });
     }
   }

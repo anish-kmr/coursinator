@@ -15,3 +15,6 @@
 .header_nav{
     font-size: 1.6rem;
 }
+.logout:hover{
+    cursor: pointer;
+}
