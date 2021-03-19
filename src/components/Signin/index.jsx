@@ -12,7 +12,6 @@ import {
     Select,
     MenuItem,
     FormControl,
-    OutlinedInput,
     InputAdornment,
     IconButton,
     TextField
@@ -42,6 +41,8 @@ const useStyle = makeStyles({
         fontSize:'1.6rem',
     },
 })
+
+
 
 const Signin = ({open,setOpen}) => {
     const theme = useTheme();
@@ -86,6 +87,14 @@ const Signin = ({open,setOpen}) => {
         setFormValues({ ...form, [prop]: event.target.value });
     };
     const handleClose = () =>setOpen(false);
+
+    const getColor = () =>{
+        let r=Math.floor(Math.random() * 200) + 50, //Random number between 50 to 200
+            g=Math.floor(Math.random() * 200) + 50,
+            b=Math.floor(Math.random() * 200) + 50;
+        return `rgb(${r},${g},${b})`
+    }
+
     const createAccount = ()=>{
         if(!validateForm()) return false
 
@@ -94,7 +103,8 @@ const Signin = ({open,setOpen}) => {
             name:form.fullname,
             email:form.email,
             password:form.password,
-            role:form.role
+            role:form.role,
+            color:getColor()
         }
         return axios.post(endpoints.signin,payload)
             .then(res=>{

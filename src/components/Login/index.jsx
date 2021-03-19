@@ -104,6 +104,7 @@ const Login = () => {
         <div className="form_input">
             <EmailIcon className="input_icon input_icon_left" />
             <input 
+              autoComplete
               type="email" 
               value={form.email} 
               onChange={handleFormChange("email")}

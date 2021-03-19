@@ -18,3 +18,14 @@
 .logout:hover{
     cursor: pointer;
 }
+.menu_item{
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.menu_item_icon{
+    display: flex;
+    margin-right: 1.4rem;
+}
+.menu_item_text{font-size: 1.4rem;}
