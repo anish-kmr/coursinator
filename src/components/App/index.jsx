@@ -12,7 +12,8 @@ const App = () => {
 
     let [loggedIn,setLoggedIn] = useState(false);
     const history = useHistory();
-
+    let modules = []
+     
     useEffect(()=>{
       let user = localStorage.getItem('user')
       if(user) {
@@ -25,7 +26,7 @@ const App = () => {
 
         <AppContext.Provider value={
             {
-                loggedIn,setLoggedIn,
+                loggedIn,setLoggedIn,modules,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",
