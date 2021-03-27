@@ -5,19 +5,24 @@ import AppContext from 'contexts/AppContext';
 import LoggedOutNavigation from 'components/LoggedOutNavigation'
 import LoggedInNavigation from 'components/LoggedInNavigation'
 import Main from 'components/Main'
+import Header from 'components/Header';
+
 import ReactNotification from 'react-notifications-component'
 import './app.css';
 import 'react-notifications-component/dist/theme.css'
 const App = () => {
 
     let [loggedIn,setLoggedIn] = useState(false);
+    let [courseDetails,setCourseDetails] = useState({});
+    const [navOpen, setNavOpen] = useState(false)
+
     const history = useHistory();
 
     useEffect(()=>{
       let user = localStorage.getItem('user')
       if(user) {
         setLoggedIn(true)
-        history.push('/dashboard')
+        if(history.location.pathname=="/") history.push('/dashboard')
       }
     })
 
@@ -26,6 +31,8 @@ const App = () => {
         <AppContext.Provider value={
             {
                 loggedIn,setLoggedIn,
+                courseDetails,setCourseDetails,
+                navOpen, setNavOpen,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",
@@ -34,17 +41,18 @@ const App = () => {
                     dismiss: {
                       duration: 4000,
                     }
-                  }
+                  },
             }
           }>
               
-            <div className={`app_container ${loggedIn?'app_container_loggedin':'' }`}>
-            <ReactNotification />
+            <Header/>
+            <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
                 {
                     loggedIn?
                     <LoggedInNavigation/>:
                     <LoggedOutNavigation/>
                 }
+            <ReactNotification />
                     <Main/>
             </div>
        </AppContext.Provider>

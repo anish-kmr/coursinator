@@ -1,4 +1,6 @@
 {
     "login":"http://localhost:8000/user/login",
-    "signin":"http://localhost:8000/user/signup"
+    "signin":"http://localhost:8000/user/signup",
+    "updateProfile":"http://localhost:8000/user/update",
+    "getAllCourses":"http://localhost:8000/course/all"
 }

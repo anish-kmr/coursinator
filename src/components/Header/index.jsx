@@ -11,13 +11,14 @@ import {
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Hamburger from 'hamburger-react'
 
 import AppContext from 'contexts/AppContext';
 import Search from 'components/Search';
 import './header.css'
  
 
-const ProfileAvatar = ({name,color,items}) => {
+const ProfileAvatar = ({name,profile_picture,color,items}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -27,18 +28,26 @@ const ProfileAvatar = ({name,color,items}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const onClickCallback = fun=>{
+    fun();
+    handleClose();
+  }
 
   return (
-    <>
-      <Avatar 
-        style={{
-          fontSize:'2rem',
-          backgroundColor:color,
-        }} 
-        aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
-      >
-        {name && name.charAt(0).toUpperCase()}
-      </Avatar>
+    <div className="profile_icon">
+      {
+        profile_picture?
+        <img className="profile_picture"  src={profile_picture} onClick={handleClick} />:
+        <Avatar 
+          style={{
+            fontSize:'2rem',
+            backgroundColor:color,
+          }} 
+          aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}
+        >
+          {name && name.charAt(0).toUpperCase()}
+        </Avatar>
+      }
 
       <Menu
         id="simple-menu"
@@ -52,7 +61,7 @@ const ProfileAvatar = ({name,color,items}) => {
       >
        { items.map(item => 
           <MenuItem 
-            onClick={item.clickHandler} 
+            onClick={()=>{onClickCallback(item.clickHandler)}} 
           >
             <div className="menu_item" >
               <span className="menu_item_icon"> {item.icon} </span>
@@ -61,21 +70,22 @@ const ProfileAvatar = ({name,color,items}) => {
           </MenuItem>
         )}
       </Menu>
-    </>
+    </div>
   )
 }
 
 const Header = () => {
-  let { loggedIn, setLoggedIn } = useContext(AppContext);
+  let { loggedIn, setLoggedIn, navOpen, setNavOpen } = useContext(AppContext);
   const history = useHistory();
-  let [user,setUser] = useState({})
+  let [user,setUser] = useState({});
+
+
 
   const logout = ()=>{
     localStorage.removeItem('user')
     setLoggedIn(false)
     history.push('/')
   }
-
   useEffect(()=>{
     console.log("loggedin changed",loggedIn)
      if(loggedIn) {
@@ -87,37 +97,45 @@ const Header = () => {
 
   return (
     <div className="header">
-        <div className="search_container">
-            <Search/>
-        </div> 
-        <div className="header_nav">
-            <div className="logout" >
-              {
-                loggedIn ?
-                <ProfileAvatar 
-                  name={user.name}
-                  color={user.color}
-                  items={[
-                    {
-                      text:"Profile",
-                      icon:<PersonIcon fontSize="large" color="primary" />,
-                      clickHandler:()=>{},
-                    },
-                    {
-                      text:"Settings",
-                      icon:<SettingsIcon fontSize="large" color="primary" />,
-                      clickHandler:()=>{},
-                    },
-                    {
-                      text:"Logout",
-                      icon:<ExitToAppIcon fontSize="large" color="primary" />,
-                      clickHandler:logout,
-                    },                    
-                  ]}  
-                />:
-                'Login'
-              }
-            </div>
+        <div className="ham">
+          <Hamburger toggled={navOpen} toggle={setNavOpen} color={navOpen?"white":"#2e2e2e"} />
+        </div>
+        <div className="nav_container">
+
+        
+          <div className="search_container">
+              <Search/>
+          </div> 
+          <div className="header_nav">
+              <div className="logout" >
+                {
+                  loggedIn ?
+                  <ProfileAvatar 
+                    name={user.name}
+                    color={user.color}
+                    profile_picture={user.profile_picture}
+                    items={[
+                      {
+                        text:"Profile",
+                        icon:<PersonIcon fontSize="large" color="primary" />,
+                        clickHandler:()=>{history.push('/profile')},
+                      },
+                      {
+                        text:"Settings",
+                        icon:<SettingsIcon fontSize="large" color="primary" />,
+                        clickHandler:()=>{},
+                      },
+                      {
+                        text:"Logout",
+                        icon:<ExitToAppIcon fontSize="large" color="primary" />,
+                        clickHandler:logout,
+                      },                    
+                    ]}  
+                  />:
+                  'Login'
+                }
+              </div>
+          </div>
         </div>
       
     </div>

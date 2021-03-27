@@ -1,6 +1,13 @@
 
 .l_nav_container{
     background: var(--primary-dark) ;
+    transition: .3s all;
+    overflow: hidden;
+    height: 100vh;
+    transform:translateY(-6rem);
+    transition: .3s all;
+    width: 25rem;
+ 
 }
 
 .l_logo_container{
@@ -8,8 +15,8 @@
     margin-top: 2rem ;
 }
 .l_logo_container img{
-    max-width: 6rem;
-    max-height: 6rem
+    max-width: 4rem;
+    max-height: 4rem
 }
 .l_nav_list{
     margin-top: 3rem;
@@ -44,4 +51,8 @@
 }
 .l_nav_item_selected .l_nav_text, .l_nav_item_selected .l_icon{
     color:#efefef !important;
+}
+
+.l_nav_shrink{
+    transition: .3s all;
 }

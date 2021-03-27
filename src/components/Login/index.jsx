@@ -92,7 +92,9 @@ const Login = () => {
           })
   }
   const openSignUp  = ()=> setOpen(true)
-
+  const handleEnter = v => {
+    if(v.keyCode==13) loginUser()
+  }
   const handleFormChange = (prop) => (event) => {
     setFormValues({ ...form, [prop]: event.target.value });
   };
@@ -104,11 +106,13 @@ const Login = () => {
         <div className="form_input">
             <EmailIcon className="input_icon input_icon_left" />
             <input 
-              autoComplete
+              autoComplete="email"
               type="email" 
               value={form.email} 
               onChange={handleFormChange("email")}
               placeholder="Email"
+              onKeyUp={handleEnter}
+              
             />
         </div>
         <div className="form_input">
@@ -118,6 +122,7 @@ const Login = () => {
               value={form.password}
               onChange={handleFormChange("password")}
               placeholder="Password"
+              onKeyUp={handleEnter}
             />
             <>
               {

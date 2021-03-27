@@ -1,0 +1,85 @@
+.profile_navigation{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.profile_heading{
+    font-size: 2.2rem;
+    color:var(--text-primary);
+}
+.profile_card{
+    display:flex;
+    flex-wrap: wrap;
+    margin: 3rem;
+    
+}
+.profile_pic{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 99;
+}
+.profile_img{
+    border-radius: 50%;
+    width:20rem;
+    height:20rem;
+    border:1px solid #dfdfdf;
+}
+.profile_details{
+    padding-top: 0.5rem;
+    flex-grow: 0.25;    
+}
+
+.user_name{
+    /* outline: 2px solid red; */
+    z-index: 1;
+    border-bottom: 2px solid var(--text-tertiary);
+    margin-bottom: 2rem;
+    transform: translateX(-6rem);
+}
+.name_input{
+    font-size: 4rem;
+    font-weight: bolder;
+    padding-left: 6rem;
+    color:var(--text-secondary);
+
+}
+
+.detail{
+    display: grid;
+    grid-template-columns: 35% auto;
+    align-items: center;
+    padding:1rem 3rem;
+    gap: 1rem;
+    /* outline: 2px solid red; */
+}
+
+.detail>*{
+    font-size: 2rem;
+    color:var(--text-primary)
+}
+
+.save_btn_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+.save_btn{
+    width: max-content;
+    padding: 1rem 4rem !important;
+}
+.change_pic{
+    width: max-content;
+    margin-top: 2rem;
+}
+.detail .MuiInputBase-root.Mui-disabled::before{
+    border-bottom:none !important;
+}
+.detail .MuiInputBase-root.Mui-disabled{
+    color:var(--text-primary) !important;
+}
+.detail .MuiInputBase-root::before{
+    border-bottom:1px dashed var(--text-tertiary) !important;
+}

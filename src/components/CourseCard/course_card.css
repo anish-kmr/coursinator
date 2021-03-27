@@ -1,0 +1,6 @@
+.author_icon{
+    position: absolute;
+    top:0;
+    right:1rem;
+    transform: translateY(-50%);
+}

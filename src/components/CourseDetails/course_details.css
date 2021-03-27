@@ -1,0 +1,63 @@
+.course_details_container{
+    /* To remove padding introduced by main_content class */
+    margin: -2rem; 
+    height: calc(100vh - 6rem);
+    overflow-y: auto;
+
+}
+.course_banner{
+    background: linear-gradient(90deg, rgba(122,32,72,1) 30%, rgba(63,38,107,1) 100%);
+    height:calc(100vh - 6rem - 5rem);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: center;
+    align-items: start;
+    padding: 10rem 4rem;
+    
+}
+.course_title{
+    font-size: 5rem;
+    margin-bottom: 3rem;
+    color:#efefef;
+}
+.course_author,.duration{
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    gap: 1rem;
+    margin:1.5rem 3rem;
+    color:#d3d3d3
+}
+.enroll{
+    display: inline-block;
+    margin:4rem;
+}
+.enroll button{
+    padding:2rem 5rem;
+    
+    border-radius: 5rem !important;
+}
+.course_thumbnail{
+    text-align: left;
+}
+.course_thumbnail>img{
+    height: 25rem;
+}
+.tab_header{
+    height:4.9rem;
+}
+.tab_content{
+    min-height:calc(100vh - 10.9rem);
+    padding:3rem;
+}
+.tab_heading{
+    color:var(--text-primary);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 4rem;
+}
+.course_description{
+    color:var(--text-secondary);
+    font-size: 1.6rem;
+    line-height:2.5rem;
+}
