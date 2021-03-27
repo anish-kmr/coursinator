@@ -8,6 +8,7 @@ import CreateCourse from 'components/CreateCourse';
 import CourseDetails from 'components/CourseDetails';
 import Dashboard from 'components/Dashboard';
 import ProfilePage from 'components/ProfilePage';
+import NewFile from 'components/CreateModulesForm/newFile';
 
 import './main.css'
  
@@ -25,6 +26,7 @@ const Main = () => {
           <Route exact path='/courses' component={Courses} />
           <Route exact path='/courses/create' component={CreateCourse} />
           <Route exact path='/courses/details' component={CourseDetails}/>
+          <Route exact path='/modules/create' component={NewFile} />
         </Switch>
       </div>
     </div>

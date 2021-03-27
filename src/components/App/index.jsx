@@ -18,6 +18,10 @@ const App = () => {
 
     const history = useHistory();
 
+    let [activeStep, setActiveStep] = useState(0);
+    let history = useHistory();
+    let modules = []
+     
     useEffect(()=>{
       let user = localStorage.getItem('user')
       if(user) {
@@ -33,6 +37,7 @@ const App = () => {
                 loggedIn,setLoggedIn,
                 courseDetails,setCourseDetails,
                 navOpen, setNavOpen,
+                modules,activeStep,setActiveStep,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",

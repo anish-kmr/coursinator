@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import {useContext} from 'react';
 import {
     Step,
     StepLabel,
@@ -7,7 +8,7 @@ import {
     StepConnector,
     Button
 } from '@material-ui/core';
-  
+import AppContext from 'contexts/AppContext';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import './custom_stepper.css'
 
@@ -75,7 +76,7 @@ const useStyles = makeStyles({
 const CustomStepper = ({steps,stepContent,stepIcons}) => {
     const classes = useStyles();
     const history = useHistory();
-    const [activeStep, setActiveStep] = React.useState(0);
+    const { activeStep,setActiveStep } = useContext(AppContext);
 
     const CustomStepIcon = ({icon, completed, active})=>{
         const iconClasses = useStepIconStyles();        
