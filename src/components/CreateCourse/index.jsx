@@ -13,10 +13,18 @@ import CreateCourseExam from 'components/CreateCourseExam';
 import './create_course.css'
 
 const CreateCourse = () => {
+  let [moduleList,setModuleList] = useState([
+      {
+        name:"",
+        description:"",
+        duration:"",
+        content:""
+      }
+  ])
   const steps = ["Course Details", "Modules", "Exams"]
-  const stepContent = [<CourseDetailsForm/>,<CreateModulesForm/>,<CreateCourseExam/>]
+  const stepContent = [<CourseDetailsForm/>,<CreateModulesForm moduleList = {moduleList} setModuleList = {setModuleList}/>,<CreateCourseExam/>]
   const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
-
+  
 
   return (
     <div style={{height:'calc(100vh - 8rem)'}}> 

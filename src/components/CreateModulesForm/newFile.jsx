@@ -1,7 +1,7 @@
 import React from 'react';
 import RichTextEditor from 'react-rte';
 import {useState, useContext} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory,useLocation} from 'react-router-dom';
 import {Button} from '@material-ui/core';
 import CreateModulesForm from './index';
 import {
@@ -38,12 +38,13 @@ const useStyles = makeStyles({
 })
 
 
-const NewFile = () => {
+const NewFile = (props) => {
     
     const [editorValue, setEditorValue] = useState(RichTextEditor.createEmptyValue())
     let history = useHistory();
+    let location = useLocation();
     const [showPreview, setShowPreview] = useState(0)
-    const { modules } = useContext(AppContext);
+    let { modules,activeStep,setActiveStep } = useContext(AppContext);
     const [ state,setState ] = useState({
       name:'',
       intro:'',
@@ -56,7 +57,7 @@ const NewFile = () => {
     };
 
     const handleBack = () => {
-      
+      setActiveStep(1);
       history.goBack();
     }
 
@@ -67,7 +68,10 @@ const NewFile = () => {
           'durationTime' : state.durationTime,
           'durationUnit' : state.durationUnit,
       }
+      
       modules.push(obj)
+      setActiveStep(1);
+      history.goBack();
     }
 
     const editorHandler = (v) => {
@@ -75,11 +79,13 @@ const NewFile = () => {
     }
     
     const editHandler = () => {
-      setShowPreview(0)
+      setShowPreview(0);
+      document.getElementById('preview').innerHTML = ' '
     }
 
     const previewHandler = () => {
       setShowPreview(1)
+     
       document.getElementById('preview').innerHTML = editorValue.toString('html')
     }
 
@@ -87,26 +93,26 @@ const NewFile = () => {
         <>
         
        
-        <div className="stepper_controls_container">
-        <div className="stepper_controls">
-        <Button className={classes.button} onClick = {editHandler} variant="contained" color="secondary">
-        Edit
-       </Button>
-       </div>
-       <div className="stepper_controls">
-            <Button className={classes.button} onClick = {previewHandler} variant="contained" color="secondary">
-            Preview
-            </Button>
-       </div>
-       </div>
-         
-       {!showPreview && 
-       <>
+      <div className="stepper_controls_container">
+      <div className="stepper_controls">
+          <Button className={classes.button} onClick = {editHandler} variant="contained" color="secondary">
+          Edit
+          </Button>
+      </div>
+      </div>
+     
+      
+      <div id = 'preview'>
+           
+      </div> 
+        
+      {!showPreview && 
+      <>
        
 
                 <div className="course_detail_form_container">
-               
-                <FormControl className={classes.formControl} fullWidth variant="outlined">
+                <div>
+                <FormControl className={classes.formControl}  fullWidth  variant="outlined">
                 <label htmlFor="course_name" className="input_label" >Module Name</label>
                 <OutlinedInput
                     id="course_name"
@@ -154,10 +160,19 @@ const NewFile = () => {
 
                 </div>
                 </FormControl>
-            
+                </div>
 
             </div>
-            
+
+            <div className="stepper_controls_container">
+            <div></div>
+            <div className="stepper_controls">
+            <Button className={classes.button} onClick = {previewHandler} variant="contained" color="secondary">
+            Preview
+            </Button>
+             </div>
+             </div>
+
        <RichTextEditor value = {editorValue} onChange = {v=>editorHandler(v)} />
         
        <div className="stepper_controls_container">
@@ -172,14 +187,14 @@ const NewFile = () => {
                         Back
                     </Button>
                 </div>
-       </div>                
+       </div> 
+
+                     
        </>
        }
 
        
-        <div id = 'preview'>
         
-        </div>
         
        
         

@@ -11,7 +11,8 @@ import 'react-notifications-component/dist/theme.css'
 const App = () => {
 
     let [loggedIn,setLoggedIn] = useState(false);
-    const history = useHistory();
+    let [activeStep, setActiveStep] = useState(0);
+    let history = useHistory();
     let modules = []
      
     useEffect(()=>{
@@ -26,7 +27,7 @@ const App = () => {
 
         <AppContext.Provider value={
             {
-                loggedIn,setLoggedIn,modules,
+                loggedIn,setLoggedIn,modules,activeStep,setActiveStep,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",

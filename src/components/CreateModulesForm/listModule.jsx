@@ -41,8 +41,7 @@ export default function ListModule({obj}) {
         <ListItemText primary={obj.intro} classes={{primary:classes.listItemText}}/>
       </ListItem>
       
-    
-
+      
       <br></br>
       <Divider />
       <br></br>

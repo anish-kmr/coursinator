@@ -3,12 +3,10 @@ import {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from 'contexts/AppContext'; 
 import '../Courses/courses.css'
-import Popup from './popup';
 import ListModule from './listModule';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/styles'
 import AddIcon from '@material-ui/icons/Add';
-import NewFile from './newFile';
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -18,19 +16,22 @@ const useStyles = makeStyles({
   }
 })
 
-const CreateModulesForm = () => {
+const CreateModulesForm = ({moduleList,setModuleList}) => {
   const classes = useStyles();
-  const { modules } = useContext(AppContext);
+  let { modules } = useContext(AppContext);
   const [list,setList] = useState([]);
   let history = useHistory();
+
   
   return (
     <>
     
     <div className="courses_container">
       <div className="courses_navigation">
-        
+      
+       
       <Link to='/modules/create'>
+          
           <Fab variant="extended" color="primary" aria-label="add">
             <AddIcon className={classes.extendedIcon} /> Create Module
           </Fab>
