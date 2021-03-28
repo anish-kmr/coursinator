@@ -13,14 +13,14 @@ import ModuleDetails from 'components/ModuleDetails';
 
 import './main.css'
  
-const Main = () => {
+const Main = ({container}) => {
   let history = useHistory();
   console.log("history",history)
   return (
     <>
-    <div className="main_container"> 
+    <div className={`main_content ${container}`}> 
       {/* <Header/> */}
-      <div className="main_content" >
+      {/* <div className="main_content" > */}
         <Switch>
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/profile' component={ProfilePage} />
@@ -30,7 +30,7 @@ const Main = () => {
           <Route exact path='/courses/module/create' component={NewFile} />
           <Route exact path='/courses/module/details' component={ModuleDetails} />
         </Switch>
-      </div>
+      {/* </div> */}
     </div>
     </>
   )

@@ -28,12 +28,6 @@ const Courses = () => {
 
 
   useEffect(()=>{
-    let course= {
-      name:"Machine Learning",
-      description:"Learn about the basics of Machine Learning in a fun way with most renowned professor Andrew Ng",
-      thumbnail:pic,
-      duration:"4 Weeks",
-    }
     axios.get(endpoints.getAllCourses)
     .then(res=>{
         console.log("courses",res);
@@ -51,7 +45,7 @@ const Courses = () => {
       <div className="courses_navigation">
         <h2 className="course_heading" >Courses</h2>
         {
-          // user.role=='admin' &&
+          user && user.role=='admin' &&
           <Link to='/courses/create' className="create_btn">
             <Fab variant="extended" size="medium"  color="primary" aria-label="add">
               <AddIcon className={classes.extendedIcon} /> Create Course 

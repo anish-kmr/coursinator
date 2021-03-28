@@ -76,7 +76,7 @@ const App = () => {
                     <LoggedInNavigation/>:
                     <LoggedOutNavigation/>
                 }
-                    <Main/>
+                    <Main container={loggedIn?'l_main_content':'o_main_content'}/>
             </div>
        </AppContext.Provider>
     )

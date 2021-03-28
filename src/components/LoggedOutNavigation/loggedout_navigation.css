@@ -1,6 +1,6 @@
 .o_nav_container{
     background: #efefef;
-    width:max(30rem,22.5%);
+    width:max(30rem,22.5vw);
     transform: translateY(-6rem);
     height:100vh;
     overflow: auto;

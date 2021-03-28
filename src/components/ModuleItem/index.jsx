@@ -32,10 +32,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ModuleItem = ({module,courseId}) => {
   const classes = useStyles();
+  let user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory();
   module = {...module,durationTime:module.duration.split('-')[0],durationUnit: module.duration.split('-')[1]}
   const showModuleDetails = ()=>{
-    if(history.location.pathname == '/courses/create') return
+    if(  !user ||  history.location.pathname == '/courses/create') return
     console.log(endpoints.getModuleDetails+`${courseId}/${module.module_id}`)
     axios.get(endpoints.getModuleDetails+`${courseId}/${module.module_id}`)
     .then(res=>{
