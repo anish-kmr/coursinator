@@ -1,0 +1,15 @@
+.module_name{
+    font-size: 4rem;
+    font-weight: 700;
+    margin-left: 2rem;
+}
+.module_details_container>.duration{
+    margin-left: 4rem;
+    margin-bottom: 3rem;
+    color:var(--text-secondary)
+}
+.module_content{
+    font-size: 1.6rem;
+    line-height: 3rem;
+    margin-left: 4rem;
+}

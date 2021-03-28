@@ -27,10 +27,6 @@ const CourseDetailsForm = ({course,setCourse}) => {
   const [ state,setState ] = useState({
     imagePreview:'',
     imageRaw:'',
-    name:'',
-    intro:'',
-    durationTime:'',
-    durationUnit:'weeks'
  
   })
 
@@ -43,11 +39,10 @@ const CourseDetailsForm = ({course,setCourse}) => {
       console.log(e.target.files)
       console.log(URL.createObjectURL(e.target.files[0]))
       setState({
-        ...state,
         imagePreview: URL.createObjectURL(e.target.files[0]),
         imageRaw: e.target.files[0]
-        
       });
+      setCourse({...course,image:e.target.files[0]})
     }
   }
 
@@ -64,11 +59,11 @@ const CourseDetailsForm = ({course,setCourse}) => {
           />
         </FormControl>
         <FormControl className={classes.formControl} fullWidth variant="outlined">
-          <label htmlFor="course_intro" className="input_label" >Course Introduction</label>
+          <label htmlFor="course_description" className="input_label" >Course Introduction</label>
           <OutlinedInput
-            id="course_intro"
-            value={course.intro}
-            onChange={handleChange('intro')}
+            id="course_description"
+            value={course.description}
+            onChange={handleChange('description')}
             multiline
             rows={5}
             className={classes.formInput}

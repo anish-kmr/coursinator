@@ -34,17 +34,16 @@ const Courses = () => {
       thumbnail:pic,
       duration:"4 Weeks",
     }
-    let allcourses=[]
-    for(let i=0;i<5;i++) allcourses.push(course)
-    setCourseList(allcourses)
-    // axios.get(endpoints.getAllCourses)
-    // .then(res=>{
-    //   console.log("courses",res);
-    //   allcourses = [...res.data];
-    // })
-    // .catch(err=>{
-    //   console.log("error courses get ",err)
-    // })
+    axios.get(endpoints.getAllCourses)
+    .then(res=>{
+        console.log("courses",res);
+        let allcourses=[]
+        allcourses = [...res.data];
+        setCourseList(allcourses)
+    })
+    .catch(err=>{
+      console.log("error courses get ",err)
+    })
   },[])
   return (
     <div className="courses_container">
@@ -65,10 +64,12 @@ const Courses = () => {
           courseList.length>0 &&
           courseList.map(course=>
             <CourseCard
+              id={course.id}
               name={course.name}
               description={course.description}
               thumbnail={course.thumbnail}
               duration={course.duration}
+              moduleSnapshot={course.moduleSnapshot}
             />
           )
         }

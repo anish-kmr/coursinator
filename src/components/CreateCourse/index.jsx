@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useState, useContext } from 'react'
 
 import DetailsIcon from '@material-ui/icons/Details';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
@@ -10,47 +10,29 @@ import CourseDetailsForm from 'components/CourseDetailsForm';
 import CreateModulesForm from 'components/CreateModulesForm';
 import CreateCourseExam from 'components/CreateCourseExam';
 
+import AppContext from 'contexts/AppContext'
 import './create_course.css'
 
 const CreateCourse = () => {
-  // let [ moduleList,setModuleList ] = useState([
-  //   {
-  //     name:"",
-  //     description:"",
-  //     duration:"",
-  //     content:"",//in HTML Format from rte editor
-  //   }
-  // ])
-  // let [course, setCourse] = useState({
-  //   name:"",
-  //   description:"",
-  //   durationTime:"",
-  //   durationUnit:"",
-  //   thumbnail:"",
-  //   author:{ //take only these values from saved localstorage user 
-  //     name:"",
-  //     profile_pic:"",
-  //     color:"", 
-  //   }
-  // })
-  // const steps = ["Course Details", "Modules", "Exams"]
-  // const stepContent = [
-  //   <CourseDetailsForm course={course} setCourse={setCourse} />,
-  //   <CreateModulesForm moduleList={moduleList} setModuleList={setModuleList} />,
-  //   <CreateCourseExam/>
-  // ]
-  // const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
-  let [moduleList,setModuleList] = useState([
-      {
-        name:"",
-        description:"",
-        duration:"",
-        content:""
-      }
-  ])
+  let { course, setCourse, moduleList, setModuleList } = useContext(AppContext);
   const steps = ["Course Details", "Modules", "Exams"]
-  const stepContent = [<CourseDetailsForm/>,<CreateModulesForm moduleList = {moduleList} setModuleList = {setModuleList}/>,<CreateCourseExam/>]
+  const stepContent = [
+    <CourseDetailsForm course={course} setCourse={setCourse} />,
+    <CreateModulesForm moduleList={moduleList} setModuleList={setModuleList} />,
+    <CreateCourseExam/>
+  ]
   const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
+  // let [moduleList,setModuleList] = useState([
+  //     {
+  //       name:"",
+  //       description:"",
+  //       duration:"",
+  //       content:""
+  //     }
+  // ])
+  // const steps = ["Course Details", "Modules", "Exams"]
+  // const stepContent = [<CourseDetailsForm/>,<CreateModulesForm moduleList = {moduleList} setModuleList = {setModuleList}/>,<CreateCourseExam/>]
+  // const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
   
 
   return (

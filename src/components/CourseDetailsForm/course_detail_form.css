@@ -43,9 +43,28 @@
     font-size: 1.4rem;
     margin-top: 1rem;
 }
+.duration_form{
+    max-width: 50rem;
+}
 .thumbnail_preview{
     position: absolute;
     width: 100%;
     height: 100%;
     top:0
 }
+.content_editor{
+    padding:2rem;
+}
+.content_editor>label{
+    font-size: 1.8rem;
+    display: block;
+
+    margin-bottom:1rem ;
+}
+.course_detail_form_container .input_label{
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.text_editor{min-height:30rem;max-height: 40rem;overflow-y: auto;}

@@ -11,14 +11,30 @@ import ReactNotification from 'react-notifications-component'
 import './app.css';
 import 'react-notifications-component/dist/theme.css'
 const App = () => {
-
     let [loggedIn,setLoggedIn] = useState(false);
     let [courseDetails,setCourseDetails] = useState({});
-    const [navOpen, setNavOpen] = useState(false)
-
-    const history = useHistory();
-
+    const [navOpen, setNavOpen] = useState(true)
     let [activeStep, setActiveStep] = useState(0);
+    let [ moduleList,setModuleList ] = useState([
+      // {
+      //   name:"",
+      //   description:"",
+      //   duration:"",
+      //   content:"",//in HTML Format from rte editor
+      // }
+    ])
+    let [course, setCourse] = useState({
+      name:"",
+      description:"",
+      durationTime:"",
+      durationUnit:"",
+      thumbnail:"",
+      author:{ //take only these values from saved localstorage user 
+        name:"",
+        profile_pic:"",
+        color:"", 
+      }
+    })
     let history = useHistory();
     let modules = []
      
@@ -37,7 +53,9 @@ const App = () => {
                 loggedIn,setLoggedIn,
                 courseDetails,setCourseDetails,
                 navOpen, setNavOpen,
-                modules,activeStep,setActiveStep,
+                moduleList,setModuleList ,
+                course, setCourse,
+                activeStep,setActiveStep,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",

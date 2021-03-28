@@ -2,5 +2,7 @@
     "login":"http://localhost:8000/user/login",
     "signin":"http://localhost:8000/user/signup",
     "updateProfile":"http://localhost:8000/user/update",
-    "getAllCourses":"http://localhost:8000/course/all"
+    "getAllCourses":"http://localhost:8000/course/all",
+    "createCourse":"http://localhost:8000/course/create",
+    "getModuleDetails":"http://localhost:8000/course/"
 }

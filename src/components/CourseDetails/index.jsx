@@ -5,11 +5,11 @@ import {
     Avatar,
     Tabs,
     Tab,
-    TabPanel
 }from '@material-ui/core';
 
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
+import ModuleItem from 'components/ModuleItem';
 import AppContext from 'contexts/AppContext';
 import './course_details.css'
 import static_pic from 'assets/images/course_thumb.png'
@@ -17,6 +17,7 @@ import static_pic from 'assets/images/course_thumb.png'
 const CourseDetails = (props) => {
     let course = props.location.state.course
     let [ activeTab,setActiveTab ] = useState(0);
+    console.log('course',course)
     const handleTabChange = (event, tabValue) => setActiveTab(tabValue);
     return (
         <div className="course_details_container" >
@@ -58,24 +59,33 @@ const CourseDetails = (props) => {
                 <div className="tab_content">
                     {activeTab === 0 && (
                         <div className="about">
-                            <div className="tab_heading"> About This Course </div>
+                            <h2 className="tab_heading"> About This Course </h2>
                             <div className="course_description">
                                 {course.description}
                             </div>
                         </div>
                     )}
                     {activeTab === 1 && (
-                        <div className="modules_list">
-                            <div className="tab_heading">Modules (Topics Covered in this Cousrse)</div>
-                        </div>
-                        //Loop through modules and render ModuleListItem Component for each module
-                        )}
+                        <>
+                            <div className="modules_list">
+                                <h2 className="tab_heading">Modules (Topics Covered in this Cousrse)</h2>
+                            </div>
+                            
+                            {
+                                course.moduleSnapshot.length>0 ?
+                                course.moduleSnapshot.map(module=><ModuleItem key={module.module_id} courseId={course.id} module={module} />):
+                                "No Modules"
+                            }
+                        </>
+                    )}
                     {activeTab === 2 && (
-                        <div className="course_exam">
-                            <div className="tab_heading">Course Exam </div>
-                        </div>
-                        //Loop through modules and render ModuleListItem Component for each module
-                        
+                        <>
+                            <div className="course_exam">
+                                <h2 className="tab_heading">Course Exam </h2>
+                            </div>
+                            
+                                                    
+                        </>
                     )}
                 </div>
             </div>
