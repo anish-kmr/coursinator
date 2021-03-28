@@ -3,7 +3,7 @@
     height:6rem;
     /* padding:0rem 4rem; */
     display: grid;
-    grid-template-columns: 25rem auto;
+    grid-template-columns: max(30rem,22.5%) auto;
     border-bottom:1px solid #e7edf2;
     
     

@@ -10,12 +10,13 @@
     color:var(--text-primary);
 }
 .course_list{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 30rem); 
+    grid-gap: 1rem; 
+    justify-content: space-between;
 }
 .course_list>*{
-    margin-bottom: 4rem;
-    margin-right:4rem;
+    margin:3rem auto;
+    /* margin-bottom: 4rem;
+    margin-right:4rem; */
 }

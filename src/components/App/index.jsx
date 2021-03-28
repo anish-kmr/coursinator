@@ -68,6 +68,7 @@ const App = () => {
             }
           }>
               
+            <ReactNotification />
             <Header/>
             <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
                 {
@@ -75,7 +76,6 @@ const App = () => {
                     <LoggedInNavigation/>:
                     <LoggedOutNavigation/>
                 }
-            <ReactNotification />
                     <Main/>
             </div>
        </AppContext.Provider>

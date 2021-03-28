@@ -75,7 +75,7 @@ const CourseCard = ({id,name, description, duration, thumbnail,moduleSnapshot}) 
           <Typography gutterBottom variant="h4" component="h2">
             {name}
           </Typography>
-          <Typography variant="body1" gutterBottom color="textSecondary" component="h4">
+          <Typography variant="body1" className="short_desc" gutterBottom color="textSecondary" component="h4">
             {description}
           </Typography>
           <Typography className={classes.duration} variant="h6" color="textPrimary" component="h6">

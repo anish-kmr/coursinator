@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme=>{
 const LoggedOutNavigation = () => {
     const classes = useStyles();
     return (
-        <div className="nav_container" >
+        <div className="o_nav_container" >
             <Paper className={classes.root}  color="primary" >
                 <div className="logo_container">
                     <img src="https://mythemestore.com/beehive-preview/wp-content/themes/beehive/assets/images/logo-vertical.svg"/>

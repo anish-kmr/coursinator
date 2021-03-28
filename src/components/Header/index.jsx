@@ -97,8 +97,12 @@ const Header = () => {
 
   return (
     <div className="header">
-        <div className="ham">
-          <Hamburger toggled={navOpen} toggle={setNavOpen} color={navOpen?"white":"#2e2e2e"} />
+      <div className="ham">
+      {
+        loggedIn && 
+          <Hamburger toggled={navOpen} className="ham_icon" toggle={setNavOpen} color={navOpen?"white":"#2e2e2e"} />
+          
+        }
         </div>
         <div className="nav_container">
 
