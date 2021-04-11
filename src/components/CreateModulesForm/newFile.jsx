@@ -13,6 +13,7 @@ import {
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import { makeStyles } from "@material-ui/core/styles";
+import HandleIllegalRoutes from 'services/HandleIllegalRoutes';
 import AppContext from "contexts/AppContext";
 import "./create_modules_form.css";
 
@@ -41,6 +42,7 @@ const useStyles = makeStyles({
 });
 
 const NewFile = (props) => {
+  HandleIllegalRoutes();
   const [editorValue, setEditorValue] = useState(
     RichTextEditor.createEmptyValue()
   );

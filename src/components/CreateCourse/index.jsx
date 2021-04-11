@@ -1,4 +1,4 @@
-import React,{ useState, useContext } from 'react'
+import React,{ useState, useEffect, useContext } from 'react'
 
 import DetailsIcon from '@material-ui/icons/Details';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
@@ -10,6 +10,7 @@ import CourseDetailsForm from 'components/CourseDetailsForm';
 import CreateModulesForm from 'components/CreateModulesForm';
 import CreateCourseExam from 'components/CreateCourseExam';
 
+import HandleIllegalRoutes from 'services/HandleIllegalRoutes';
 import AppContext from 'contexts/AppContext'
 import './create_course.css'
 
@@ -22,17 +23,9 @@ const CreateCourse = () => {
     <CreateCourseExam/>
   ]
   const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
-  // let [moduleList,setModuleList] = useState([
-  //     {
-  //       name:"",
-  //       description:"",
-  //       duration:"",
-  //       content:""
-  //     }
-  // ])
-  // const steps = ["Course Details", "Modules", "Exams"]
-  // const stepContent = [<CourseDetailsForm/>,<CreateModulesForm moduleList = {moduleList} setModuleList = {setModuleList}/>,<CreateCourseExam/>]
-  // const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
+  
+  HandleIllegalRoutes()
+  // useEffect(()=>{HandleIllegalRoutes()})
   
 
   return (

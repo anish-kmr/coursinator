@@ -1,21 +1,23 @@
 import React,{ useState, useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import AppContext from 'contexts/AppContext';
 import LoggedOutNavigation from 'components/LoggedOutNavigation'
 import LoggedInNavigation from 'components/LoggedInNavigation'
 import Main from 'components/Main'
 import Header from 'components/Header';
-
+import ExamPage from 'components/ExamPage'
 import ReactNotification from 'react-notifications-component'
 import './app.css';
 import 'react-notifications-component/dist/theme.css'
 const App = () => {
-    let [loggedIn,setLoggedIn] = useState(false);
-    let [courseDetails,setCourseDetails] = useState({});
+    const [loggedIn,setLoggedIn] = useState(false);
+    const [courseDetails,setCourseDetails] = useState({});
     const [navOpen, setNavOpen] = useState(true)
-    let [activeStep, setActiveStep] = useState(0);
-    let [ moduleList,setModuleList ] = useState([
+    const [activeStep, setActiveStep] = useState(2);
+    const [examMode,setExamMode] = useState(true);
+    const [ moduleList,setModuleList ] = useState([
       // {
       //   name:"",
       //   description:"",
@@ -23,7 +25,7 @@ const App = () => {
       //   content:"",//in HTML Format from rte editor
       // }
     ])
-    let [course, setCourse] = useState({
+    const [course, setCourse] = useState({
       name:"",
       description:"",
       durationTime:"",
@@ -35,15 +37,19 @@ const App = () => {
         color:"", 
       }
     })
-    let history = useHistory();
-    let modules = []
-     
+    let history = useHistory();     
     useEffect(()=>{
+      console.log("hist", history)
       let user = localStorage.getItem('user')
       if(user) {
         setLoggedIn(true)
-        if(history.location.pathname=="/") history.push('/dashboard')
+        if(history.location.pathname=="/" || (history.location.pathname==="/exam"&&!examMode)) history.push('/dashboard')
       }
+      else{
+        history.push('/')
+      }
+
+
     })
 
     return (
@@ -56,6 +62,7 @@ const App = () => {
                 moduleList,setModuleList ,
                 course, setCourse,
                 activeStep,setActiveStep,
+                examMode, setExamMode,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",
@@ -69,15 +76,27 @@ const App = () => {
           }>
               
             <ReactNotification />
-            <Header/>
-            <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
-                {
-                    loggedIn?
-                    <LoggedInNavigation/>:
-                    <LoggedOutNavigation/>
-                }
-                    <Main container={loggedIn?'l_main_content':'o_main_content'}/>
-            </div>
+            <Switch>
+              {
+                examMode &&
+                <Route exact path="/exam" component={ExamPage} />  
+              }
+              <Route>
+                <>
+                  <Header/>
+                  <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
+                      {
+                          loggedIn?
+                          <LoggedInNavigation/>:
+                          <LoggedOutNavigation/>
+                      }
+                          <Main container={loggedIn?'l_main_content':'o_main_content'}/>
+                  </div>
+                </>
+
+              </Route>
+            </Switch>
+          
        </AppContext.Provider>
     )
 } 

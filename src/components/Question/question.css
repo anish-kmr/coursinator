@@ -1,0 +1,72 @@
+.question_container{
+    margin: 3rem auto;
+    
+}
+.qs_statement{
+    display:grid;
+    grid-template-columns: 3rem auto max-content 5rem ;
+    align-items: center;   
+    font-size: 2rem;
+}
+.u_statement{
+    margin: 5rem 2rem;
+}
+.u_options{
+    margin : 5rem auto;
+    padding-left: 2rem; 
+}
+/* .qs_statement>*{outline: 2px solid red;} */
+.delete_qs{
+    text-align: center;
+    margin-left: 2rem ;
+}
+.delete_qs:hover{
+    cursor: pointer;
+    animation: shake 0.2s ease-in-out;
+}
+.qs_options{
+    font-size: 1.8em;
+    margin:0.5rem 3rem;
+}
+.options{
+    font-size: 1.8rem;
+}
+.correct_answer{
+    font-size: 1.7rem;
+    margin-left: 2rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color:#05980b;
+    font-weight: 500;
+}
+
+.qs_controls{
+    margin-top: 4rem;
+    padding:2rem;
+}
+.qs_controls>button{
+    width: 15rem;
+    padding:1rem 3rem;
+    margin:2rem;
+}
+.statement .MuiInputBase-root.Mui-disabled::before,
+.options .MuiInputBase-root.Mui-disabled::before,
+.correct_answer .MuiInputBase-root.Mui-disabled::before{
+    border-bottom:none !important;
+}
+.statement .MuiInputBase-root.Mui-disabled,
+.options  .MuiInputBase-root.Mui-disabled,
+.correct_answer .MuiInputBase-root.Mui-disabled{
+    color:var(--text-primary) !important;
+}
+.statement .MuiInputBase-root::before,
+.options  .MuiInputBase-root::before,
+.correct_answer  .MuiInputBase-root::before{
+    border-bottom:0px dashed var(--text-tertiary) !important;
+}
+@keyframes shake{
+    33%{ transform: rotateZ(-20deg); }
+    66%{ transform: rotateZ(20deg); }
+    100%{ transform: rotateZ(-20deg); }
+}

@@ -1,9 +1,11 @@
 import React from 'react'
+import HandleIllegalRoutes from 'services/HandleIllegalRoutes';
 
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import './module_details.css'
  
 const ModuleDetails = (props) => {
+    HandleIllegalRoutes();
     console.log('props',props)
     let module = props.module || props.history.location.state.module;
     if(module.duration) {

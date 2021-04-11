@@ -61,3 +61,40 @@
     font-size: 1.6rem;
     line-height:2.5rem;
 }
+.exam_details{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.exam_details>div{
+    display: flex;
+    align-items: center;
+    gap:1rem
+}
+.detail_text{
+    font-size: 1.8rem;
+}
+.exam_instructions>h4{
+    font-size: 2rem;
+    color:var(--text-secondary);
+    margin-top: 3rem;
+}
+.exam_instructions>ol{
+    margin:1rem 3rem;
+}
+.exam_instructions>ol>li{
+    font-size: 1.6rem;
+    color:#707070;
+    margin:.5rem;
+}
+.start_test{
+    text-align: center;
+    margin-top: 3rem;
+
+}
+.start_test button{
+    width: max-content;
+    padding:1rem 4rem;
+
+}

@@ -1,0 +1,63 @@
+.exam_choice_container{
+    width: max-content;
+    margin:0 auto;
+    max-width: 50rem;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.create_exam_container{
+    /* display: flex;
+    align-items: center; */
+    position: relative;
+    height:100%;
+}
+.or_seperator{
+    position: relative;
+    text-align: center;
+    /* display: inline-block; */
+    margin:4rem 0;
+    font-size: 2rem;
+    color:var(--text-tertiary);
+    /* max-width: 3rem; */
+}
+.or_seperator::before,.or_seperator::after{
+    content: "";
+    position: absolute;
+    height: 0.15rem;
+    width: calc(50% - 3rem);
+    background-color: var(--text-tertiary);
+    top:50%;
+    transform: translateY(-50%);
+}
+.or_seperator::before{
+    left:0;
+}
+.or_seperator::after{
+    right: 0;
+}
+.add_btn{
+    text-align: center;
+}
+.move-enter {
+    opacity: 0.4;
+    transform: translate(-100%, 0)
+}
+
+.move-enter-active {
+    opacity: 1;
+    transform: translate(0, 0);
+    transition: all 0.3s ease-in-out;
+}
+
+.move-exit {
+    opacity: 1;
+    transform: translate(0, 0)
+}
+
+.move-exit-active {
+    opacity: 0.4;
+    transform: translate(-100%, 0);
+    transition: all 0.3s ease-in-out;
+}

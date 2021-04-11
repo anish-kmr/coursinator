@@ -16,25 +16,25 @@ import './custom_stepper.css'
 const useStepIconStyles = makeStyles(theme=>{
 return {
     root: {
-    backgroundColor: '#ccc',
-    zIndex: 1,
-    color: '#fff',
-    width: 40,
-    height: 40,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
+        backgroundColor: '#ccc',
+        zIndex: 1,
+        color: '#fff',
+        width: 40,
+        height: 40,
+        display: 'flex',
+        borderRadius: '50%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     active: {
-    backgroundColor:theme.palette.primary.main,
-    width:50,
-    height:50,
-    transform:"translateY(-5px)",
-    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+        backgroundColor:theme.palette.primary.main,
+        width:50,
+        height:50,
+        transform:"translateY(-5px)",
+        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     },
     completed: {
-    backgroundColor:theme.palette.secondary.main,
+        backgroundColor:theme.palette.secondary.main,
     },
 }
 });
@@ -88,8 +88,8 @@ const CustomStepper = ({steps,stepContent,stepIcons}) => {
     }
     
 
-    const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep<3?prevActiveStep + 1:prevActiveStep);
+    const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep>0?prevActiveStep - 1:prevActiveStep);
     const handleCancel = ()=> {
         console.log('cancel!!!!!!!!!!!!!!!!!!!!!')
         history.push('/courses')

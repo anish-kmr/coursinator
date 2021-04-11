@@ -45,7 +45,7 @@ const Courses = () => {
       <div className="courses_navigation">
         <h2 className="course_heading" >Courses</h2>
         {
-          user && user.role=='admin' &&
+          // user && user.role=='admin' &&
           <Link to='/courses/create' className="create_btn">
             <Fab variant="extended" size="medium"  color="primary" aria-label="add">
               <AddIcon className={classes.extendedIcon} /> Create Course 

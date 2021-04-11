@@ -14,12 +14,15 @@ import CloseIcon from '@material-ui/icons/Close';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 
+import HandleIllegalRoutes from 'services/HandleIllegalRoutes';
 
 import endpoints from 'endpoints.json'
 import axios from 'axios';
 import './profile_page.css'
 const ProfilePage = () => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    HandleIllegalRoutes();
+    const { notificationOptions } = useContext(AppContext);
+    let user = JSON.parse(localStorage.getItem('user'))
     const initialUser = {
         id: user.id,
         name: user.name,
@@ -32,7 +35,6 @@ const ProfilePage = () => {
 
 
     };
-    const { notificationOptions } = useContext(AppContext);
     let [updatedUser,setUpdatedUser] = useState(initialUser);
     let [imagePreview,setImagePreview]=useState("");
     let [editable,setEditable]=useState(false);

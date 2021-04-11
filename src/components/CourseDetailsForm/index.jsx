@@ -124,7 +124,6 @@ const CourseDetailsForm = ({course,setCourse}) => {
             </div>
           </Box>
         </FormControl>
-        <button onClick={()=>console.log('course',course)} >Click</button>
       </div>
     </div>
   )

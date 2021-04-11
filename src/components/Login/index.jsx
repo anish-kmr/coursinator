@@ -102,10 +102,11 @@ const Login = () => {
   return (
     <Card className={`${classes.root} login_card`}>
       <h2 className="login_card_heading">Login Now</h2>
-      <CardContent>
+      <CardContent component="form" autocomplete>
         <div className="form_input">
             <EmailIcon className="input_icon input_icon_left" />
             <input 
+              id="login_email"
               autoComplete="email"
               type="email" 
               value={form.email} 
@@ -117,7 +118,8 @@ const Login = () => {
         </div>
         <div className="form_input">
             <VpnKeyIcon className="input_icon input_icon_left"/>
-            <input 
+            <input
+              id="login_password"
               type={isPasswordVisible?"text":"password"} 
               value={form.password}
               onChange={handleFormChange("password")}
