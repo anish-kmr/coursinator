@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   }
 });
 
-const CourseCard = ({id,name, description, duration, thumbnail,moduleSnapshot}) => {
+const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSnapshot}) => {
   const classes = useStyles();
   const history = useHistory();
   const { setCourseDetails } = useContext(AppContext);
@@ -61,16 +61,20 @@ const CourseCard = ({id,name, description, duration, thumbnail,moduleSnapshot}) 
         />
         <CardContent className={classes.cardContent}>
           <div className="author_icon">
+          {
+            author && author.profile_picture?
+            <img className="profile_picture"  src={author.profile_picture} />:
             <Avatar 
               style={{
                 width:'4.5rem',
                 height:'4.5rem',
                 fontSize:'2rem',
-                backgroundColor:'purple',
+                backgroundColor:author?.color||'purple',
               }}
             >
-              A
+              {(author?.name && author.name.charAt(0).toUpperCase()) || 'A'}
             </Avatar>
+          }
           </div>
           <Typography gutterBottom variant="h4" component="h2">
             {name}

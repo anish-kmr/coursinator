@@ -16,6 +16,7 @@
     "react": "^17.0.1",
     "react-countdown-circle-timer": "^2.5.1",
     "react-dom": "^17.0.1",
+    "react-loadingg": "^1.7.2",
     "react-notifications-component": "^3.0.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -26,7 +27,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3006 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

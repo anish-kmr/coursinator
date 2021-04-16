@@ -1,9 +1,11 @@
 import React,{ useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'; 
 import { makeStyles } from '@material-ui/styles'
-import RichTextEditor from 'react-rte';
+
 
 import CourseCard from 'components/CourseCard';
+
+import { SemipolarLoading } from 'react-loadingg';
 
 import {
   Fab,
@@ -54,6 +56,9 @@ const Courses = () => {
         }  
       </div>
       <div className="course_list">
+        
+        {courseList.length==0 && <SemipolarLoading size="large" color="#1e2761"/>}
+
         {
           courseList.length>0 &&
           courseList.map(course=>
@@ -63,6 +68,7 @@ const Courses = () => {
               description={course.description}
               thumbnail={course.thumbnail}
               duration={course.duration}
+              author={course.author}
               moduleSnapshot={course.moduleSnapshot}
             />
           )

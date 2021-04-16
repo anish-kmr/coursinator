@@ -4,5 +4,7 @@
     "updateProfile":"http://localhost:8000/user/update",
     "getAllCourses":"http://localhost:8000/course/all",
     "createCourse":"http://localhost:8000/course/create",
-    "getModuleDetails":"http://localhost:8000/course/"
+    "getModuleDetails":"http://localhost:8000/course/",
+    "createExam":"http://localhost:8000/exam/create",
+    "getExam":"http://localhost:8000/exam/"
 }

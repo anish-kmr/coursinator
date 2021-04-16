@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -22,7 +22,7 @@ const useStyle = makeStyles({
   }
 })
 
-const CourseDetailsForm = ({course,setCourse}) => {
+const CourseDetailsForm = ({ setProgressDisabled ,course,setCourse}) => {
   const classes = useStyle();
   const [ state,setState ] = useState({
     imagePreview:'',
@@ -45,6 +45,15 @@ const CourseDetailsForm = ({course,setCourse}) => {
       setCourse({...course,image:e.target.files[0]})
     }
   }
+  const isFormValid = ()=>{
+    if(!course.name || !course.description || !course.durationTime ) return false
+    return true
+  }
+
+  useEffect(()=>{
+    setProgressDisabled(!isFormValid())
+  },[course])
+  
 
   return (
     <div className="course_detail_form_container">

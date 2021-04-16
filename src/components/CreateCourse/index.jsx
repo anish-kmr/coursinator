@@ -16,11 +16,12 @@ import './create_course.css'
 
 const CreateCourse = () => {
   let { course, setCourse, moduleList, setModuleList } = useContext(AppContext);
+  const [ progressDisabled, setProgressDisabled ] = useState(true)
   const steps = ["Course Details", "Modules", "Exams"]
   const stepContent = [
-    <CourseDetailsForm course={course} setCourse={setCourse} />,
-    <CreateModulesForm moduleList={moduleList} setModuleList={setModuleList} />,
-    <CreateCourseExam/>
+    <CourseDetailsForm setProgressDisabled={setProgressDisabled} course={course} setCourse={setCourse} />,
+    <CreateModulesForm setProgressDisabled={setProgressDisabled} moduleList={moduleList} setModuleList={setModuleList} />,
+    <CreateCourseExam  setProgressDisabled={setProgressDisabled} />
   ]
   const stepIcons = [<DetailsIcon />,<ViewModuleIcon />,<QueryBuilderIcon />]
   
@@ -31,7 +32,7 @@ const CreateCourse = () => {
   return (
     <div style={{height:'calc(100vh - 8rem)'}}> 
         <h2 className="create_heading">Create course</h2>
-        <CustomStepper steps={steps} stepContent={stepContent} stepIcons={stepIcons} />
+        <CustomStepper progressDisabled={progressDisabled} steps={steps} stepContent={stepContent} stepIcons={stepIcons} />
     </div>
   )
 }

@@ -73,10 +73,10 @@ const useStyles = makeStyles({
 
 
  
-const CustomStepper = ({steps,stepContent,stepIcons}) => {
+const CustomStepper = ({steps,stepContent,stepIcons,progressDisabled}) => {
     const classes = useStyles();
     const history = useHistory();
-    const { activeStep,setActiveStep } = useContext(AppContext);
+    const { activeStep,setActiveStep,setCourse,defaultCourse } = useContext(AppContext);
 
     const CustomStepIcon = ({icon, completed, active})=>{
         const iconClasses = useStepIconStyles();        
@@ -88,10 +88,17 @@ const CustomStepper = ({steps,stepContent,stepIcons}) => {
     }
     
 
-    const handleNext = () => setActiveStep((prevActiveStep) => prevActiveStep<3?prevActiveStep + 1:prevActiveStep);
+    const handleNext = () => {
+        if(activeStep===2) {
+            setCourse(defaultCourse)
+            setActiveStep(0)
+            
+            history.push('/dashboard')
+        }
+        setActiveStep((prevActiveStep) => prevActiveStep<3?prevActiveStep + 1:prevActiveStep);
+    }
     const handleBack = () => setActiveStep((prevActiveStep) => prevActiveStep>0?prevActiveStep - 1:prevActiveStep);
     const handleCancel = ()=> {
-        console.log('cancel!!!!!!!!!!!!!!!!!!!!!')
         history.push('/courses')
     }
 
@@ -121,10 +128,11 @@ const CustomStepper = ({steps,stepContent,stepIcons}) => {
                         Back
                     </Button>
                     <Button
-                    className={classes.button}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
+                        className={classes.button}
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        disabled={progressDisabled}
                     >
                     {activeStep >= steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>

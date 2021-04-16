@@ -9,34 +9,33 @@ import Main from 'components/Main'
 import Header from 'components/Header';
 import ExamPage from 'components/ExamPage'
 import ReactNotification from 'react-notifications-component'
+import { SemipolarLoading } from 'react-loadingg';
+import Backdrop from '@material-ui/core/Backdrop';
+
 import './app.css';
 import 'react-notifications-component/dist/theme.css'
 const App = () => {
     const [loggedIn,setLoggedIn] = useState(false);
     const [courseDetails,setCourseDetails] = useState({});
     const [navOpen, setNavOpen] = useState(true)
-    const [activeStep, setActiveStep] = useState(2);
+    const [activeStep, setActiveStep] = useState(0);
     const [examMode,setExamMode] = useState(true);
-    const [ moduleList,setModuleList ] = useState([
-      // {
-      //   name:"",
-      //   description:"",
-      //   duration:"",
-      //   content:"",//in HTML Format from rte editor
-      // }
-    ])
-    const [course, setCourse] = useState({
+    const [loading,setLoading] = useState(false);
+    const [ moduleList,setModuleList ] = useState([])
+    const active_user = JSON.parse(localStorage.getItem('user'))
+    const defaultCourse = {
       name:"",
       description:"",
       durationTime:"",
-      durationUnit:"",
+      durationUnit:"months",
       thumbnail:"",
       author:{ //take only these values from saved localstorage user 
-        name:"",
-        profile_pic:"",
-        color:"", 
+        name:active_user.displayName,
+        profile_picture:active_user.profile_picture,
+        color:active_user.color, 
       }
-    })
+    }
+    const [course, setCourse] = useState(defaultCourse)
     let history = useHistory();     
     useEffect(()=>{
       console.log("hist", history)
@@ -60,9 +59,10 @@ const App = () => {
                 courseDetails,setCourseDetails,
                 navOpen, setNavOpen,
                 moduleList,setModuleList ,
-                course, setCourse,
+                course, setCourse,defaultCourse,
                 activeStep,setActiveStep,
                 examMode, setExamMode,
+                setLoading,
                 notificationOptions:{
                     insert: "top",
                     container: "top-center",
@@ -76,26 +76,29 @@ const App = () => {
           }>
               
             <ReactNotification />
-            <Switch>
-              {
-                examMode &&
-                <Route exact path="/exam" component={ExamPage} />  
-              }
-              <Route>
-                <>
-                  <Header/>
-                  <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
-                      {
-                          loggedIn?
-                          <LoggedInNavigation/>:
-                          <LoggedOutNavigation/>
-                      }
-                          <Main container={loggedIn?'l_main_content':'o_main_content'}/>
-                  </div>
-                </>
+            <Backdrop open={loading} >
+              <SemipolarLoading size="large" color="#1e2761"/>
+            </Backdrop>
+              <Switch>
+                {
+                  examMode &&
+                  <Route exact path="/exam" component={ExamPage} />  
+                }
+                <Route>
+                  <>
+                    <Header/>
+                    <div className={`app_container ${loggedIn?'app_container_loggedin':'' } ${!navOpen && 'app_container_full'}`}>
+                        {
+                            loggedIn?
+                            <LoggedInNavigation/>:
+                            <LoggedOutNavigation/>
+                        }
+                            <Main container={loggedIn?'l_main_content':'o_main_content'}/>
+                    </div>
+                  </>
 
-              </Route>
-            </Switch>
+                </Route>
+              </Switch>
           
        </AppContext.Provider>
     )

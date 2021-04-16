@@ -6,11 +6,13 @@ import ModuleItem from 'components/ModuleItem';
 
 
 import Fab from '@material-ui/core/Fab';
+
 import { makeStyles } from '@material-ui/styles'
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import InfoIcon from '@material-ui/icons/Info';
 import { store } from 'react-notifications-component';
+import { SemipolarLoading } from 'react-loadingg';
 
 
 import endpoints from 'endpoints.json';
@@ -27,20 +29,22 @@ const useStyles = makeStyles({
   }
 })
 
-const CreateModulesForm = ({moduleList,setModuleList}) => {
-  const { course, setCourse, notificationOptions } = useContext(AppContext);
+const CreateModulesForm = ({moduleList,setModuleList, setProgressDisabled}) => {
+  const { course, setCourse, notificationOptions,setLoading } = useContext(AppContext);
   const save_course = ()=>{
     let form = new FormData();
     let c = {...course, moduleList};
     let payload = JSON.stringify(c);
     form.append('course',payload)
     form.append('image',c.image)
-    console.log('course',JSON.parse(payload)) 
-    console.log('image',c.image) 
+
+    setLoading(true)
     axios.post(endpoints.createCourse, form)
     .then(res=>{
       console.log("create course res",res)
       if(res.data.created){
+        let created_course = res.data.course
+        setCourse({...course,id:created_course.courseID})
         store.addNotification({...notificationOptions,
           title:"Course Saved !",
           message:"Course Saved successfully!. You can now auto generate questions in Create Exam Section.",
@@ -54,6 +58,7 @@ const CreateModulesForm = ({moduleList,setModuleList}) => {
           type:"danger"
         })
       }
+      setLoading(false)
     })
     .catch(err=>{
       console.log('create err',err.response)
@@ -62,13 +67,19 @@ const CreateModulesForm = ({moduleList,setModuleList}) => {
         message:"There were some problems in your network or the server is not responding. Please Try Later",
         type:"danger"
       })
+      setLoading(false)
     })
   }
+
+  useEffect(()=>{
+    setProgressDisabled(course.id===undefined)
+  },[course])
   const classes = useStyles();    
   return (
     <>
     
     <div className="modules_container">
+      
       <div className="modules_navigation">
       
        
