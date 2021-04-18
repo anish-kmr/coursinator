@@ -70,6 +70,7 @@ const Courses = () => {
               duration={course.duration}
               author={course.author}
               moduleSnapshot={course.moduleSnapshot}
+              examSnapshot={course.examSnapshot}
             />
           )
         }

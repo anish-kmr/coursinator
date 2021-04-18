@@ -16,22 +16,41 @@ import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import ModuleItem from 'components/ModuleItem';
 import AppContext from 'contexts/AppContext';
 
+import axios from 'axios';
+import endpoints from 'endpoints.json';
+
 
 import './course_details.css'
 import static_pic from 'assets/images/course_thumb.png'
+
+
 
 const CourseDetails = (props) => {
   let { examMode, setExamMode } = useContext(AppContext); 
   let history = useHistory();
     let course = props.location.state.course
+    console.log('course ',course)
     let [ activeTab,setActiveTab ] = useState(0);
     const handleTabChange = (event, tabValue) => setActiveTab(tabValue);
-    const startExam = () => {
-      setExamMode(true);
-      history.push({
-        pathname:'/exam',
-        state:{exam:{num_qs:20,marks_per_qs:2,time:"60 min"}}
-      })
+    const startExam = async () => {
+      try{
+        let res = await axios.get(endpoints.getExam+course.examSnapshot.exam_id)
+        console.log('res',res)
+        if(res.data.success){
+          setExamMode(true);
+          history.push({
+            pathname:'/exam',
+            state:{exam:{...res.data.exam,name:course.name,questions:res.data.exam.questions.map((qs,i)=>({...qs,qno:i+1}))}}
+          })
+        }
+        else{
+          alert('some err')
+        }
+      }catch(err){
+        console.log("fetch exam error",err)
+      }
+
+
     }
     return (
       <div className="course_details_container">
@@ -39,24 +58,30 @@ const CourseDetails = (props) => {
           <div className="course_info">
             <div className="course_title">{course.name}</div>
             <div className="course_author">
-              <Avatar
+            <div className="detail_author_icon">
+          {
+            course.author && course.author.profile_picture?
+            <img className="detail_profile_picture"  src={course.author.profile_picture} alt="icon" />:
+            <Avatar
                 style={{
                   width: "3rem",
                   height: "3rem",
                   fontSize: "1.4rem",
-                  backgroundColor: "purple",
+                  backgroundColor:course.author?.color||'purple',
                 }}
               >
-                A
-              </Avatar>
-              Andrew Ng
+              {(course.author?.name && course.author.name.charAt(0).toUpperCase()) || 'A'}
+            </Avatar>
+          }
+          </div>
+            {course.author?.name || 'Andrew Ng'}  
             </div>
             <div className="duration">
               <AccessTimeIcon
                 style={{ color: "#d3d3d3", fontSize: "3rem" }}
                 color="primary"
               />{" "}
-              {course.duration}
+              {course.duration.split('-').join(' ')}
             </div>
             <div className="enroll">
               <Button variant="contained" size="medium" color="primary">
@@ -114,28 +139,30 @@ const CourseDetails = (props) => {
                         style={{ fontSize: "3rem" }}
                         color="primary"
                       />
-                      <span className="detail_text">60 minutes</span>
+                      <span className="detail_text">{course.examSnapshot.time_allocated.split('-').join(' ')}</span>
                     </div>
                     <div className="detail">
                       <AssignmentIcon
                         style={{ fontSize: "3rem" }}
                         color="primary"
                       />
-                      <span className="detail_text">20 Questions</span>
+                      <span className="detail_text">{course.examSnapshot.num_questions} Questions</span>
                     </div>
                     <div className="detail">
                       <EqualizerIcon
                         style={{ fontSize: "3rem" }}
                         color="primary"
                       />
-                      <span className="detail_text">40 Marks</span>
+                      <span className="detail_text">
+                        {course.examSnapshot.marks_per_ques * course.examSnapshot.num_questions} Marks
+                      </span>
                     </div>
                     <div className="detail">
                       <CheckBoxIcon
                         style={{ fontSize: "3rem" }}
                         color="primary"
                       />
-                      <span className="detail_text">15 marks to pass</span>
+                      <span className="detail_text">{course.examSnapshot.passing_marks} marks to pass</span>
                     </div>
                   </div>
                   <div className="exam_instructions">
@@ -171,17 +198,17 @@ const CourseDetails = (props) => {
                         Fill In The Blanks.
                       </li>
                       <li>
-                        The duration of the assessment is <b>60 minutes.</b>
+                        The duration of the assessment is <b>{course.examSnapshot.time_allocated.split('-').join(' ')}.</b>
                       </li>
                       <li>
-                        There will be total <b>20 questions</b> and 1 section.
+                        There will be total <b>{course.examSnapshot.num_questions} questions</b> and 1 section.
                       </li>
                       <li>
-                        Each Question carries <b>2 marks</b>. There is NO
+                        Each Question carries <b>{course.examSnapshot.marks_per_ques} marks</b>. There is NO
                         Negative Marking.
                       </li>
                       <li>
-                        Passing Marks for this exam is <b>15 Marks</b>. Students getting less score will not be considered to complete the course. However they have as many tries as they want.
+                        Passing Marks for this exam is <b>{course.examSnapshot.passing_marks} Marks</b>. Students getting less score will not be considered to complete the course. However they have as many tries as they want.
                       </li>
                       <li>
                         In Fill Ups type question, make sure to correctly spell

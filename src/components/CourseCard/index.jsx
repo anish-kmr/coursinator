@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   }
 });
 
-const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSnapshot}) => {
+const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSnapshot, examSnapshot}) => {
   const classes = useStyles();
   const history = useHistory();
   const { setCourseDetails } = useContext(AppContext);
@@ -47,7 +47,11 @@ const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSna
     setCourseDetails({
       name,description, duration, thumbnail
     });
-    history.push({pathname:'/courses/details',state:{course:{id,name,description, duration, thumbnail, moduleSnapshot}}});
+    history.push({
+      pathname:'/courses/details',
+      state:{
+        course:{id,name,description, duration, thumbnail, moduleSnapshot, examSnapshot,  author}
+      }});
   }
   return (
     <Card className={classes.root}>

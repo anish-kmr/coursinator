@@ -44,6 +44,7 @@ const UneditableQuestion = ({question,userAnswer,setUserAnswer,isBookmarked,book
                     >
                     {options.map((option, i) => (
                         <FormControlLabel
+                        key={`${qid}-${i}`}
                         value={option}
                         control={<Radio />}
                         label={<div className="options">{option}</div>}

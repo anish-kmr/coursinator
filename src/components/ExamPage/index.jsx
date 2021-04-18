@@ -41,22 +41,14 @@ const renderTime = ({remainingTime}) => {
     </div>
   )
 }
+
 const ExamPage = () => {
     const history = useHistory();
-    let durationInSeconds = 310;
+    const exam = history.location.state.exam
+    let durationInSeconds = 0;
+    if(exam.time_allocated.split('-')[1] === "minutes") durationInSeconds = exam.time_allocated.split('-')[0] * 60;
+    if(exam.time_allocated.split('-')[1] === "hours") durationInSeconds = exam.time_allocated.split('-')[0] * 60*60;
     const hurryRatio = 300/durationInSeconds;
-    let exam={questions:[]}
-    for(let i=0;i<60;i++) {
-      exam.questions.push({
-        qid:i+1,
-        qno:i+1,
-        statement:`Question ${i+1}`,
-        type:i%2?'MCQ':"FILLUPS",
-        options:['Option1','Option2','Option3','Option4'],
-        answer:"Option3",
-        userAnswer:''
-      })
-    }
     
     let [ activeQuestion, setActiveQuestion ] = useState({...exam.questions[0]});
     let [ userAnswers, setUserAnswers ] = useState(new Array(exam.questions.length));
@@ -90,7 +82,23 @@ const ExamPage = () => {
       else updatedBookmarks[qno-1]=true
       setBookmarks(updatedBookmarks)
     }
-
+    const getResults = (key, script) => {
+      let correct=0, incorrect=0,unmarked=0;
+      for(let i=0;i<key.length;i++ ){
+        if(script[i].trim()==="") unmarked++;
+        else if(script[i].trim()===key[i].trim()) correct++;
+        else incorrect++;
+      }
+      return {correct, incorrect, unmarked}
+    }
+    const finishTest = async () => {
+      console.log("answers correct",exam.questions.map(qs=>qs.answer))
+      console.log("answers finihshes",userAnswers)
+      let {correct, incorrect, unmarked} = getResults(exam.questions.map(qs=>qs.answer),userAnswers);
+      alert(` correct : ${correct}, incorrect : ${incorrect}, unmarked :  ${unmarked}\nscore=${correct*exam.marks_per_ques}`)
+      history.block((location, action) => true);
+      history.push('/dashboard')
+    }
     useEffect(()=>{
       console.log(bookmarks)
     },[bookmarks])
@@ -105,9 +113,9 @@ const ExamPage = () => {
   return (
     <div className="exam_container">
       <div className="exam_header">
-        <div className="exam_name">Machine Learning</div>
+        <div className="exam_name"> {exam.name} </div>
         <div className="finish_test">
-          <Button variant="contained" size="medium" color="secondary">
+          <Button variant="contained" size="medium" color="secondary" onClick={finishTest}>
             Finish Test
           </Button>
         </div>
@@ -136,7 +144,7 @@ const ExamPage = () => {
             </div>
             <div className="qs_chips_container">
               {getFilteredQuestions().map((qs, i) => (
-                <div className={
+                <div key={qs.qid} className={
                   `qs_chip 
                   ${activeQuestion.qno==qs.qno && 'qs_chip_active'} 
                   ${userAnswers[qs.qno-1] && userAnswers[qs.qno-1].length>0 && 'qs_chip_done'} 
