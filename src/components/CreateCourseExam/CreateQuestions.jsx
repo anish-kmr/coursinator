@@ -44,6 +44,7 @@ const CreateQuestions = ({ questions, setQuestions }) => {
         <TransitionGroup>
           {Object.keys(questions).map((qid, i) => (
             <CSSTransition key={qid} timeout={300} classNames="move">
+              
               <EditableQuestion
                 key={qid}
                 qid={qid}

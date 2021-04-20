@@ -18,7 +18,7 @@ const App = () => {
     const [loggedIn,setLoggedIn] = useState(false);
     const [courseDetails,setCourseDetails] = useState({});
     const [navOpen, setNavOpen] = useState(true)
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(2);
     const [examMode,setExamMode] = useState(true);
     const [loading,setLoading] = useState(false);
     const [ moduleList,setModuleList ] = useState([])
