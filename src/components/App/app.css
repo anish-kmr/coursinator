@@ -42,7 +42,7 @@ html {
 .MuiButtonBase-root {
     font-size: 1.2rem !important;
 }
-.MuiBackdrop-root{
+.CustomBackdrop{
     z-index: 2 !important;
 }
 .app_container{

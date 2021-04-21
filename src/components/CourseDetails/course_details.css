@@ -107,3 +107,7 @@
     height: 100%;
     border-radius: 50%;
 }
+
+.course_details_container .enroll >.MuiButton-contained.Mui-disabled{
+    background-color: #707070 !important;
+}

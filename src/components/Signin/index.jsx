@@ -140,11 +140,10 @@ const Signin = ({open,setOpen}) => {
         <>
            
             <Dialog
-            fullScreen={fullScreen}
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
-            
+                fullScreen={fullScreen}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="responsive-dialog-title"
             >
                 <DialogTitle id="responsive-dialog-title"  >
                     <p  className="signin_heading">

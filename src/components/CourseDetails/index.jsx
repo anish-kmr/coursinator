@@ -1,4 +1,4 @@
-import React,{ useState, useContext } from 'react'
+import React,{ useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { 
     Button ,
@@ -28,10 +28,17 @@ import static_pic from 'assets/images/course_thumb.png'
 const CourseDetails = (props) => {
   let { examMode, setExamMode } = useContext(AppContext); 
   let history = useHistory();
+  const user = JSON.parse(localStorage.getItem('user'));
     let course = props.location.state.course
     console.log('course ',course)
     let [ activeTab,setActiveTab ] = useState(0);
+    let [ enrolled,setEnrolled ] = useState(false);
     const handleTabChange = (event, tabValue) => setActiveTab(tabValue);
+   
+    useEffect(()=>{
+      if(user.role !== "admin" && (user.enrolled.includes(course.id))) setEnrolled(true)
+    })
+    
     const startExam = async () => {
       try{
         let res = await axios.get(endpoints.getExam+course.examSnapshot.exam_id)
@@ -51,6 +58,25 @@ const CourseDetails = (props) => {
       }
 
 
+    }
+    const enrollCourse = async () =>{
+      if(!user) alert('login first')
+      try{
+        let payload = {
+          userId:user?.id,
+          courseId:course.id
+        }
+        console.log("payload",payload)
+        let res = await axios.post(endpoints.enrollCourse,payload)
+        if(res.data.success){
+          alert("enrolled")
+          console.log("enorlled",res.data.user)
+          setEnrolled(true)
+        }
+      }
+      catch(err){
+        console.log("error enrolling ",err)
+      }
     }
     return (
       <div className="course_details_container">
@@ -84,9 +110,12 @@ const CourseDetails = (props) => {
               {course.duration.split('-').join(' ')}
             </div>
             <div className="enroll">
-              <Button variant="contained" size="medium" color="primary">
-                Enroll Now !
-              </Button>
+              {
+                (!user || user.role !== "admin") &&
+                <Button variant="contained" size="medium" color="primary" onClick={enrollCourse} disabled={enrolled}>
+                  {enrolled?"Enrolled":"Enroll Now !"}
+                </Button>
+              }
             </div>
           </div>
           <div className="course_thumbnail">

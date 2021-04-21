@@ -18,7 +18,7 @@ const App = () => {
     const [loggedIn,setLoggedIn] = useState(false);
     const [courseDetails,setCourseDetails] = useState({});
     const [navOpen, setNavOpen] = useState(true)
-    const [activeStep, setActiveStep] = useState(2);
+    const [activeStep, setActiveStep] = useState(0);
     const [examMode,setExamMode] = useState(true);
     const [loading,setLoading] = useState(false);
     const [ moduleList,setModuleList ] = useState([])
@@ -30,9 +30,10 @@ const App = () => {
       durationUnit:"months",
       thumbnail:"",
       author:{ //take only these values from saved localstorage user 
-        name:active_user.displayName,
-        profile_picture:active_user.profile_picture,
-        color:active_user.color, 
+        id:active_user?.id,
+        name:active_user?.displayName,
+        profile_picture:active_user?.profile_picture,
+        color:active_user?.color, 
       }
     }
     const [course, setCourse] = useState(defaultCourse)
@@ -76,7 +77,7 @@ const App = () => {
           }>
               
             <ReactNotification />
-            <Backdrop open={loading} >
+            <Backdrop className="CustomBackdrop" open={loading} >
               <SemipolarLoading size="large" color="#1e2761"/>
             </Backdrop>
               <Switch>

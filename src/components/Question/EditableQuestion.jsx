@@ -50,6 +50,7 @@ const EditableQuestion = ({qid,qno,statement,type,options,answer,editable,update
           <div className="statement">
             <TextField
               fullWidth
+              multiline
               value={updatedQs.statement}
               onChange={handleChange("statement")}
               InputProps={{

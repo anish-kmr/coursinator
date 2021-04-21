@@ -11,11 +11,13 @@ import {
   Typography,
   Avatar
 } from '@material-ui/core';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
+import endpoints from 'endpoints.json'
+import axios from 'axios';
 import AppContext from 'contexts/AppContext'
 import static_thumb from 'assets/images/course_thumb.png';
 import './course_card.css'
-import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
 
 const useStyles = makeStyles({
@@ -42,7 +44,9 @@ const useStyles = makeStyles({
 const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSnapshot, examSnapshot}) => {
   const classes = useStyles();
   const history = useHistory();
+  const user = JSON.parse(localStorage.getItem('user'));
   const { setCourseDetails } = useContext(AppContext);
+
   const exploreCourse = () =>{
     setCourseDetails({
       name,description, duration, thumbnail
@@ -51,7 +55,37 @@ const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSna
       pathname:'/courses/details',
       state:{
         course:{id,name,description, duration, thumbnail, moduleSnapshot, examSnapshot,  author}
-      }});
+      }
+    });
+  }
+  const enrollCourse = async () =>{
+    if(!user) alert('login first')
+    try{
+      let payload = {
+        userId:user?.id,
+        courseId:id
+      }
+      console.log("payload",payload)
+      let res = await axios.post(endpoints.enrollCourse,payload)
+      if(res.data.success){
+        alert("enrolled")
+        console.log("enorlled",res.data.user)
+        history.push({
+          pathname:'/courses/details',
+          state:{
+            course:{id,name,description, duration, thumbnail, moduleSnapshot, examSnapshot,  author}
+          }
+        })
+      }
+    }
+    catch(err){
+      console.log("error enrolling ",err)
+    }
+  }
+  const checkEnrollment = ()=>{
+    if(!user) return true
+    if(user.role !== "admin" && (!user.enrolled.includes(id))) return true
+    return false
   }
   return (
     <Card className={classes.root}>
@@ -96,9 +130,13 @@ const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSna
         <Button variant="outlined"  size="medium" color="secondary" onClick={exploreCourse} >  
           Explore
         </Button>
-        <Button variant="contained" size="medium" color="primary">
-          Enroll
-        </Button>
+        {
+          // (user===null || (!user.role || (user.role && user.role!=="admin"))) &&
+          checkEnrollment() &&
+          <Button variant="contained" size="medium" color="primary" onClick={enrollCourse}>
+            Enroll
+          </Button>
+        }
       </CardActions>
     </Card>
   )
