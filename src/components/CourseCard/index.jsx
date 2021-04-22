@@ -70,6 +70,8 @@ const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSna
       if(res.data.success){
         alert("enrolled")
         console.log("enorlled",res.data.user)
+        let newUser={...user,enrolled:res.data.user.enrolled}
+        localStorage.setItem('user',JSON.stringify(newUser))
         history.push({
           pathname:'/courses/details',
           state:{
@@ -84,7 +86,7 @@ const CourseCard = ({id,name, description, duration, thumbnail,author, moduleSna
   }
   const checkEnrollment = ()=>{
     if(!user) return true
-    if(user.role !== "admin" && (!user.enrolled.includes(id))) return true
+    if(user.role !== "admin" && (!user.enrolled?.includes(id))) return true
     return false
   }
   return (

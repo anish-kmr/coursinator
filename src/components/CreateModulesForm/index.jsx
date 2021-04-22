@@ -37,7 +37,7 @@ const CreateModulesForm = ({moduleList,setModuleList, setProgressDisabled}) => {
     let payload = JSON.stringify(c);
     form.append('course',payload)
     form.append('image',c.image)
-
+    console.log("c",c)
     setLoading(true)
     axios.post(endpoints.createCourse, form)
     .then(res=>{

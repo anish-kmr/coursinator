@@ -36,7 +36,7 @@ const CourseDetails = (props) => {
     const handleTabChange = (event, tabValue) => setActiveTab(tabValue);
    
     useEffect(()=>{
-      if(user.role !== "admin" && (user.enrolled.includes(course.id))) setEnrolled(true)
+      if(user.role !== "admin" && (user.enrolled?.includes(course.id))) setEnrolled(true)
     })
     
     const startExam = async () => {
@@ -71,6 +71,8 @@ const CourseDetails = (props) => {
         if(res.data.success){
           alert("enrolled")
           console.log("enorlled",res.data.user)
+          let newUser={...user,enrolled:res.data.user.enrolled}
+          localStorage.setItem('user',JSON.stringify(newUser))
           setEnrolled(true)
         }
       }

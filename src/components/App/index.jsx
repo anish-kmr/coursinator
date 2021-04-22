@@ -23,6 +23,7 @@ const App = () => {
     const [loading,setLoading] = useState(false);
     const [ moduleList,setModuleList ] = useState([])
     const active_user = JSON.parse(localStorage.getItem('user'))
+    console.log('active_user',active_user)
     const defaultCourse = {
       name:"",
       description:"",
@@ -30,7 +31,7 @@ const App = () => {
       durationUnit:"months",
       thumbnail:"",
       author:{ //take only these values from saved localstorage user 
-        id:active_user?.id,
+        id:active_user?.uid || active_user?.id ,
         name:active_user?.displayName,
         profile_picture:active_user?.profile_picture,
         color:active_user?.color, 
